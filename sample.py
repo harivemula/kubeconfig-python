@@ -7,7 +7,7 @@ import sys
 
 
 config = ConfigParser.RawConfigParser()
-config.read('ConfigFile.properties')
+config.read('/var/ConfigFile.properties')
 
 print "dbname:[" + config.get('DatabaseSection', 'database.dbname')+"]";
 
