@@ -3,6 +3,8 @@ import ConfigParser
 import os
 import pycurl
 from io import BytesIO 
+import sys
+
 
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
@@ -22,28 +24,28 @@ print "HTTP_PROXY:["+os.getenv('HTTP_PROXY','None')+"]"
 print "HTTPS_PROXY:["+os.getenv('HTTPS_PROXY','None')+"]"
 print "NO_PROXY:["+os.getenv('NO_PROXY','None')+"]"
 
-#https://stackabuse.com/using-curl-in-python-with-pycurl/
 
-b_obj = BytesIO() 
-crl = pycurl.Curl() 
+PY3 = sys.version_info[0] > 2
 
-# Set URL value
-crl.setopt(crl.URL, 'https://github.com/harivemula/platform-automation-pks/blob/master/README.md') 
-#'https://wiki.python.org/moin/BeginnersGuide')
 
-# Write bytes that are utf-8 encoded
-crl.setopt(crl.WRITEDATA, b_obj)
+class Test:
+    def __init__(self):
+        self.contents = ''
+        if PY3:
+            self.contents = self.contents.encode('ascii')
 
-# Perform a file transfer 
-crl.perform() 
+    def body_callback(self, buf):
+        self.contents = self.contents + buf
 
-# End curl session
-crl.close()
 
-# Get the content stored in the BytesIO object (in byte characters) 
-get_body = b_obj.getvalue()
+sys.stderr.write("Testing %s\n" % pycurl.version)
 
-# Decode the bytes stored in get_body to HTML and print the result 
-print('Output of GET request:\n%s' % get_body.decode('utf8')) 
+t = Test()
+c = pycurl.Curl()
+c.setopt(c.URL, 'https://file-examples.com/wp-content/uploads/2017/02/file_example_JSON_1kb.json')
+c.setopt(c.WRITEFUNCTION, t.body_callback)
+c.perform()
+c.close()
 
+print(t.contents)
 #
