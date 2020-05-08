@@ -8,7 +8,7 @@ import time
 
 config = ConfigParser.RawConfigParser()
 config.read('/var/ConfigFile.properties')
-
+print "---------- Python script variables (ENV, PROP) ------------"
 print "dbname:[" + config.get('DatabaseSection', 'database.dbname')+"]";
 
 # Set environment variables
@@ -48,11 +48,12 @@ c.setopt(c.URL, 'http://'+kubeconfig_app_url+'/api/demo')
 c.setopt(c.WRITEFUNCTION, t.body_callback)
 c.perform()
 c.close()
-print "KUBECONFIG SPRING APP Contents"
+print ""
+print "-------------KUBECONFIG SPRING APP Contents-------------"
 print(t.contents)
 
 
-print "JSON Content from Internet"
+print "-------------JSON Content from Internet------------------"
 t1 = Test()
 c = pycurl.Curl()
 c.setopt(c.URL, 'https://file-examples.com/wp-content/uploads/2017/02/file_example_JSON_1kb.json')
@@ -62,7 +63,7 @@ c.close()
 
 print(t1.contents)
 
-print "Going to sleep"
+print "-------------Going to sleep----------------"
 time.sleep(5000)
 
 #
