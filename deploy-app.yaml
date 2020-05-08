@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: kubeconfig-python-example
+  name: kubeconfig-python-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: kubeconfig-python-example
+  template:
+    metadata:
+      labels:
+        run: kubeconfig-python-example
+    spec:
+      containers:
+      - image: harivemula/kubeconfig-python:latest
+        name: kubeconfig-python-example
+        env:
+        - name: API_USER
+          value: test-api-user
+        volumeMounts:
+        - name: config-volume
+          mountPath: /var
+
+      volumes:
+      - name: config-volume
+        configMap:
+          name: sampleconfig
