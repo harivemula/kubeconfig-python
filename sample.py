@@ -4,7 +4,7 @@ import os
 import pycurl
 from io import BytesIO 
 import sys
-
+import time
 
 config = ConfigParser.RawConfigParser()
 config.read('/var/ConfigFile.properties')
@@ -48,4 +48,8 @@ c.perform()
 c.close()
 
 print(t.contents)
+
+print "Going to sleep"
+time.sleep(5000)
+
 #
