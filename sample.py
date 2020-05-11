@@ -1,8 +1,8 @@
-#!/usr/bin/python    
+#!/usr/bin/python
 import ConfigParser
 import os
 import pycurl
-from io import BytesIO 
+from io import BytesIO
 import sys
 import time
 
@@ -14,7 +14,7 @@ print "dbname:[" + config.get('DatabaseSection', 'database.dbname')+"]";
 # Set environment variables
 #os.environ['API_USER'] = 'username'
 #os.environ['API_PASSWORD'] = 'secret'
-kubeconfig_app_url = os.getenv('KUBECONFIG_SPRING_APP_URL','kubeconfigexample.default')
+kubeconfig_app_url = os.getenv('KUBECONFIG_SPRING_APP_URL','')
 # Get environment variables
 #USER = os.getenv('API_USER')
 #PASSWORD = os.environ.get('API_PASSWORD')
@@ -41,16 +41,16 @@ class Test:
 sys.stderr.write("Testing %s\n" % pycurl.version)
 
 
-
-t = Test()
-c = pycurl.Curl()
-c.setopt(c.URL, 'http://'+kubeconfig_app_url+'/api/demo')
-c.setopt(c.WRITEFUNCTION, t.body_callback)
-c.perform()
-c.close()
-print ""
-print "-------------KUBECONFIG SPRING APP Contents-------------"
-print(t.contents)
+if kubeconfig_app_url != '':
+    t = Test()
+    c = pycurl.Curl()
+    c.setopt(c.URL, 'http://'+kubeconfig_app_url+'/api/demo')
+    c.setopt(c.WRITEFUNCTION, t.body_callback)
+    c.perform()
+    c.close()
+    print ""
+    print "-------------KUBECONFIG SPRING APP Contents-------------"
+    print(t.contents)
 
 
 print "-------------JSON Content from Internet------------------"

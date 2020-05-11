@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sampleconfig
+  name: {{ .Release.Name }}-sampleconfig
 data:
   ConfigFile.properties: |
     [DatabaseSection]

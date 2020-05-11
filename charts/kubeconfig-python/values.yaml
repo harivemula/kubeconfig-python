@@ -82,19 +82,25 @@ affinity: {}
 env:
 - name: API_USER
   value: test-api-user
-- name: KUBECONFIG_SPRING_APP_URL
-  value: ''
+- name: API_USER1
+  value: test-api-user1
 
 volumeMounts:
-- name: config-volume
-  mountPath: /var
+- name: cache-volume
+  mountPath: /cache
 
 volumes:
-- name: config-volume
-  configMap:
-    name: sampleconfig
+- name: cache-volume
+  emptyDir: {}
+
+# here dummykey:dummyvalue used as a workaround for import-value issue.
+kubespringex:
+  service:
+    dummykey: dummyvalue
 
 
+
+# because we have - in the name, we can't directly use .Values syntax, instead we have to use {{ index .Values "kubeconfigexample-spring" "service" "port" }}
+#check this issue : https://github.com/helm/helm/issues/2192
 kubeconfigexample-spring:
-  enabled: false
-  fullnameOverride: "{{ .Release.Name }}-springex"
+  enabled: true

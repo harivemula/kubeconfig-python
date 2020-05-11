@@ -62,15 +62,14 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "kubeconfigexample-spring.fullname" -}}
+{{- printf "%s-%s" (.Release.Name) ("springex") | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{- define "kubeconfigexample-spring.serviceurl" -}}
+{{- printf "%s:%s" (include "kubeconfigexample-spring.fullname" .) ( .Values.kubespringex.service.port | toString ) }}
+{{- end }}
+
 {{/*
-
-
-## These are added to modify the value of the dependent chart.
-#{{- define "kubeconfigexample-spring.fullnameOverride" -}}
-#{{- printf "%s-%s" (.Release.Name) ("springex") | trunc 63 | trimSuffix "-" }}
-#{- end }}
-
-#{{- define "kubeconfigexample-spring.fullname" -}}
-#{{ include "kubeconfigexample-spring.fullnameOverride" . }}
-#{{- end }}
+{{- printf "%s:%d" (include "kubeconfigexample-spring.fullname" .) ( index .Values "kubeconfigexample-spring" "service" "port" ) }}
 */}}

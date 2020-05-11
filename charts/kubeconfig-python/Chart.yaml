@@ -31,3 +31,6 @@ dependencies:
   version: ">=0.4.1"
   repository: "@harivemula-harbor"
   condition: kubeconfigexample-spring.enabled
+  import-values:
+    - child: service
+      parent: kubespringex.service

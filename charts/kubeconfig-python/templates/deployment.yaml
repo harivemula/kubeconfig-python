@@ -40,10 +40,17 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: KUBECONFIG_SPRING_APP_URL
+              value: "{{ include "kubeconfigexample-spring.serviceurl" . }}"
             {{- toYaml .Values.env | nindent 12 }}
           volumeMounts:
+            - name: config-volume
+              mountPath: /var
             {{- toYaml .Values.volumeMounts | nindent 12 }}
       volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-sampleconfig
         {{- toYaml .Values.volumes | nindent 8 }}
 
       {{- with .Values.nodeSelector }}
