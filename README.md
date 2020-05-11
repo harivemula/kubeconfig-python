@@ -17,3 +17,25 @@ To enable HTTP Proxy inside the container use below env variables in deployment
           value: <Proxy URL>
         - name: NO_PROXY
           value: "<No_Proxy IP/URLs comma separated>"
+
+
+## Using helm to deploy the applications
+Download the Let's encrypt intermediate certificate from (https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem.txt).
+Run the below command to add helm repository
+```
+helm repo add --ca-file lets-encrypt-x3-cross-signed.pem harivemula-harbor https://harbor.galaxy.env2.k8scloud.cf/chartrepo/library
+```
+Update the helm repo
+```
+helm repo update
+```
+
+If required you may have to run the dependent charts update
+```
+helm dep update
+```
+
+Run the below command to install kubeconfig-python and its dependent chart kubeconfigexample-spring
+```
+helm install kubex harivemula-harbor/kubeconfig-python
+```
