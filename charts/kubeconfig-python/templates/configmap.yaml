@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sampleconfig
+data:
+  ConfigFile.properties: |
+    [DatabaseSection]
+    database.dbname=unitTest-dummy
+    database.user=root
+    database.password=

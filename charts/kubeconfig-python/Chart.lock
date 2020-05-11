@@ -1,0 +1,6 @@
+dependencies:
+- name: kubeconfigexample-spring
+  repository: https://harbor.galaxy.env2.k8scloud.cf/chartrepo/library
+  version: 0.4.1
+digest: sha256:69d92c277211f855fbd427ee261369091089df52ba66fe62b818b3558c7a203e
+generated: "2020-05-09T19:06:16.428977+05:30"
